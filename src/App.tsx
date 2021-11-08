@@ -3,8 +3,8 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { FavoriteBorder, Favorite } from '@mui/icons-material';
 import { Box } from '@mui/system'
 import './App.css'
-import './theme.css'
 import { pink } from '@mui/material/colors';
+import { useState } from 'react';
 
 
 // * ----------------------- THEME ------------------------
@@ -21,17 +21,29 @@ const theme = createTheme({
   },
 });
 
-
-
-
 // * ------------------ THEME - FIM ------------------------
 
+
+
+
 function App() {
+
+  const [dados, setDados] = useState([]);
+
+
+  function handleSubmit(event: any) {
+    event.preventDefault();
+
+    console.log(event.target);
+    console.log(dados.nome);
+
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <main className="App">
         <Grid container alignItems="center" sx={{ backgroundColor: "#EBEBEB" }}>
-          <Box component="form"
+          <Box component="form" onSubmit={handleSubmit}
             sx={{
               display: "flex",
               flexDirection: "column",
@@ -44,9 +56,10 @@ function App() {
               gap: "24px",
               boxShadow: "0px 8px 16px 0px #0000001A"
 
-            }}>
+            }}
+          >
 
-            <TextField fullWidth={true} id="nome" required label="nome" name="nome" />
+            <TextField fullWidth={true} id="nome" required label="nome" name="nome" value={dados.nome} />
             <TextField fullWidth={true} id="email" required label="email" name="email" />
             <FormControlLabel control={<Checkbox sx={{
               color: pink[800],
@@ -63,7 +76,7 @@ function App() {
               }
             }} />} label="Assina Newsletter?" />
 
-            <FormControl fullWidth={true}>
+            {/* <FormControl fullWidth={true}>
               <InputLabel id="selecao-genero-label">Gênero:</InputLabel>
               <Select labelId="selecao-genero-label" id="selecao-genero" label="Gênero" >
                 <MenuItem value={"feminino"}>Feminino</MenuItem>
@@ -71,9 +84,9 @@ function App() {
                 <MenuItem value={"nb"}>Não Binário</MenuItem>
                 <MenuItem value={"outro"}>Outro</MenuItem>
               </Select>
-            </FormControl>
+            </FormControl> */}
 
-            <Button variant="text" color="primary">Enviar</Button>
+            <Button variant="text" color="primary" type="submit">Enviar</Button>
           </Box>
         </Grid>
       </main>
